@@ -1,0 +1,19 @@
+{% load socialaccount %} {% if user.is_authenticated %}
+<p>Welcome, {{ user.username }}!</p>
+
+<!-- Display user-specific content or redirect to another page -->
+<a href="{% url 'display_Contacts' %}">Show Contacts</a>
+
+<a href="{% url 'submit_Contacts' %}">Insert a new school</a>
+
+<!-- signout option -->
+<a href="{% url 'account_logout' %}">Logout</a>
+
+<!-- <a href="{% url 'account_logout' %}?next=/custom-logout-success/">Logout</a> -->
+
+{% else %}
+<p>You are not logged in.</p>
+
+<a href="{% provider_login_url 'google' %}">Login with Google</a>
+
+{% endif %}

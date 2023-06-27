@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contacts</title>
+  </head>
+  <body>
+    Njiru Contacts
+    <br />
+    {% for contact in all_Contacts %}
+    <a href="{% url 'display_School_Details' contact.id %}"
+      >{{ contact.id }}. {{contact.school_name }}</a
+    >
+
+    <br />
+    {% endfor %}
+  </body>
+</html>
