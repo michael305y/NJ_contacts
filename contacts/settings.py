@@ -42,6 +42,9 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    # jazzmin
+    'jazzmin',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -60,7 +63,15 @@ INSTALLED_APPS = [
 
     # social providers
     'allauth.socialaccount.providers.google',
+
+    # crispy package
+    "crispy_forms",
+    "crispy_bootstrap5",
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -78,9 +89,6 @@ MIDDLEWARE = [
 
 SITE_ID = 1
 
-####
-# client_ID = 74381872594-d58lsq5h67dn9pm7b9g8mm69s47h5ha7.apps.googleusercontent.com
-# client_secret = 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
 
 
 # Provider specific settings
@@ -90,8 +98,8 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         'APP': {
-            'client_id': '74381872594-d58lsq5h67dn9pm7b9g8mm69s47h5ha7.apps.googleusercontent.com',
-            'secret': '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',
+            'client_id': '',
+            'secret': '',
             'key': ''
         }
     }
@@ -135,14 +143,25 @@ WSGI_APPLICATION = 'contacts.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+# # RAILWAY  Postgres DB details
+# import dj_database_url
+
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
+#     'default': dj_database_url.config(
+#         default = os.environ.get('default_DB'),
+#         conn_max_age=600,
+#         conn_health_checks=True,
+#     )
 # }
 
-# RAILWAY  Postgres DB details
+# # RENDER  Postgres DB details
 import dj_database_url
 
 DATABASES = {
@@ -190,7 +209,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATIC_FILES_DIR = [
+
+STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 

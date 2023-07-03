@@ -10,5 +10,14 @@ urlpatterns = [
 
     path('display_School_Details/<int:pk>', views.school_details, name='display_School_Details'),
 
-    path('privacy_policy', views.privacy_policy, name='privacy_policy')
+    path('update_school_record/<int:pk>', views.update_school_record, name='update_school_record'),
+
+    path('delete_school_record/<int:pk>', views.delete_school_record, name='delete_school_record'),
+
+    path('privacy_policy', views.privacy_policy, name='privacy_policy'),
+
+    path('export_data_as_excel', views.export_data_as_excel, name='export_data_as_excel'),
+
+    
+    # path('accounts/signup/', views.privacy_policy, )
 ]

@@ -1,0 +1,53 @@
+/* 
+======== FOOTER ======
+*/
+.wrapper {
+    min-height: 100vh;
+    margin-bottom: -50px;
+}
+
+#footer,
+.push {
+    height: -50px;
+}
+
+/* 
+===== CUSTOM PAGINATION =======
+*/
+
+.page-item.active .page-link {
+    columns: white;
+    background-color: cyan;
+    border: 1px solid gray;
+}
+
+.pagination>li>a {
+    background-color: white;
+    color: gray;
+}
+
+.pagination>li>a:focus,
+.pagination>li>a:hover,
+.pagination>span>a:focus,
+.pagination>span>a:focus {
+    color: gray;
+    background-color: blueviolet;
+    border: 1px solid gray;
+    box-shadow: none;
+}
+
+/* Input Search box */
+.dataTables_filter {
+    margin-bottom: 10px !important;
+}
+
+/* Show entries */
+.dataTables_length {
+    margin-bottom: 10px !important;
+}
+
+/* BUTTONS */
+.dt-buttons {
+
+    margin-bottom: 10px !important;
+}

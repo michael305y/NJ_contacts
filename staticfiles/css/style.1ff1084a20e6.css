@@ -1,0 +1,31 @@
+body {
+  /* margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; */
+
+
+  background-color: cyan;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100vh;
+  width: auto;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: centre;
+  height: 100vh;
+  /* Adjust this value based on your page structure */
+}
+
+.container2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* Adjust this value based on your page structure */
+}

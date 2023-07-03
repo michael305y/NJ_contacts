@@ -1,0 +1,77 @@
+/* margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; */
+
+/* 
+  background-color: mediumaquamarine;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100vh;
+  width: auto;
+} */
+
+body {
+  background-color: magenta;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.card {
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+/* ===== formatting submitting form ===== */
+/* .form_container {
+  position: absolute;
+  top: 50%;
+  left: 50%
+} */
+
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: centre;
+  height: 20vh;
+  /* Adjust this value based on your page structure */
+}
+
+.container2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* Adjust this value based on your page structure */
+}
+
+/* ================
+ method 1 centering a div
+ =================
+ */
+/* .login_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+} */
+
+/* ================
+ method 2 centering a div
+ =================
+ */
+/* .login_container {
+  position: absolute;
+  top: 50%;
+  left: 50%
+} */

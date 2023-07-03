@@ -1,3 +1,5 @@
+{% extends 'pages/base.html' %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,9 +8,45 @@
     <title>School Details</title>
   </head>
   <body>
-    <h2>School Details</h2>
-    {{ specific_School.id }}. {{ specific_School.school_code }}
-    {{specific_School.school_name }} {{specific_School.school_head }}
-    {{specific_School.Mobile_number }} {{specific_School.location }}
+    {% block content %}
+    <!-- <h2>School Details</h2> -->
+
+    <div class="card">
+      <h5 class="card-header">School Details</h5>
+      <div class="card-body">
+        <h5 class="card-title">{{ specific_School.school_name }}</h5>
+        <p class="card-text">
+          {{ specific_School.school_code }}
+          <br />
+          {{ specific_School.school_head }}
+          <br />
+          {{specific_School.Mobile_number}}
+          <br />
+          {{specific_School.location }}
+          <br />
+          {{specific_School.created_at }}
+          <br />
+
+        </p>
+        <a href="{% url 'display_Contacts' %}" class="btn btn-primary">Go Back</a>
+
+        <a
+          href="{% url 'delete_school_record' specific_School.id %}"
+          class="btn btn-danger"
+          >Delete</a
+        >
+        <a
+          href="{% url 'update_school_record' specific_School.id %}"
+          class="btn btn-secondary"
+          >Update</a
+        >
+      </div>
+    </div>
+
+    <td>{{ specific_School.school_code }} {{ specific_School.school_name }}</td>
+    <td>{{ specific_School.school_head }}</td>
+    <td>{{specific_School.Mobile_number }}</td>
+    <td>{{ specific_School.location }}</td>
+    {% endblock %}
   </body>
 </html>

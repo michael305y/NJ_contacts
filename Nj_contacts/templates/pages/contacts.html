@@ -1,19 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contacts</title>
-  </head>
-  <body>
-    Njiru Contacts
-    <br />
-    {% for contact in all_Contacts %}
-    <a href="{% url 'display_School_Details' contact.id %}"
-      >{{ contact.id }}. {{contact.school_name }}</a
-    >
 
-    <br />
+{% extends 'pages/base.html' %}
+
+<!-- to display the navbar contents -->
+{%  block navbar_content %}
+<i style="color: cyan;" class="fas fa-home-alt"></i>&nbsp;Home &nbsp;&nbsp;
+
+<i style="color: cyan;"  class="fas fa--alt"></i>&nbsp;Add school
+
+
+
+{%  endblock navbar_content %}
+
+<!--===================== to display the webpage ================= -->
+{% block content %}
+<!-- search textbox============== -->
+<!-- <form class="mb-4" action="/display_Contacts">
+  <div class="input-group mb-3">
+    <input
+      type="text"
+      name="q"
+      class="form-control form-control-lg"
+      placeholder="Enter School to Search"
+    />
+    <button class="btn btn-dark" type="submit" id="button-addon2">
+      Search
+    </button>
+  </div>
+</form> -->
+
+<!--=====END search textbox============== -->
+
+    <a href="{% url 'submit_Contacts' %}">Insert a new school</a>
+    <!-- message from backend -->
+    {% for message in messages %}
+        {% if message.tags == 'success' %}
+            <div class="alert alert-primary alert-dismissible fade show" role="alert" id="success-message">
+                {{ message }}
+                <a href="{% url 'submit_Contacts' %}" type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
+            </div>
+        {% endif %}
     {% endfor %}
-  </body>
-</html>
+    <script>
+        setTimeout(function() {
+            document.getElementById('success-message').style.display = 'none';
+        }, 3000);  // Disappear after 5 seconds (5000 milliseconds)
+
+        //  Scroll to the last row in the table
+         var table = document.getElementById('contacts');
+         table.scrollTop = table.scrollHeight;
+       
+    </script>
+    <!-- END message from -->
+
+    <div class="container">
+        <br><br><br>
+        <table class="table table-bordered table-striped table-hover table-sm caption-top" id="contacts" style="text-align: center;">
+            <thead class="table-success">
+                <tr>
+                    <th>ID</th>
+                    <th>School code</th>
+                    <th>School Name</th>
+                </tr>
+            </thead>
+            <!-- Data from DB or the backend -->
+            <tbody>
+                {% if all_Contacts %}
+                    {% for contact in all_Contacts %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'display_School_Details' contact.id %}">
+                                    {{ contact.id }}
+                                </a>
+                            </td>
+                            <td>{{ contact.school_code }}</td>
+                            <td>{{ contact.school_name }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>  <!-- END // container -->
+    <br><br><br>
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
