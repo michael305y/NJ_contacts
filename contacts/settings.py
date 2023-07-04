@@ -143,12 +143,12 @@ WSGI_APPLICATION = 'contacts.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # # RAILWAY  Postgres DB details
 # import dj_database_url
@@ -242,4 +242,4 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 # REDIRECTS
-LOGIN_REDIRECT_URL = ''
+LOGIN_REDIRECT_URL = '/'
