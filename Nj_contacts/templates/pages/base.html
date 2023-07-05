@@ -74,8 +74,130 @@
 
         <!-- Datatables script -->
         <script>
-            $("#contacts").DataTable({
-                // Datatables configurations
+       $(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#contacts thead tr').clone(true).addClass('filters').appendTo( '#contacts thead' );
+    var table = $('#contacts').DataTable( {
+        orderCellsTop: true,
+        fixedHeader: true,
+        initComplete: function() {
+            var api = this.api();
+            // For each column
+            api.columns().eq(0).each(function(colIdx) {
+                // Set the header cell to contain the input element
+                var cell = $('.filters th').eq($(api.column(colIdx).header()).index());
+                var title = $(cell).text();
+                $(cell).html( '<input type="text" placeholder="'+title+'" />' );
+                // On every keypress in this input
+                $('input', $('.filters th').eq($(api.column(colIdx).header()).index()) )
+                    .off('keyup change')
+                    .on('keyup change', function (e) {
+                        e.stopPropagation();
+                        // Get the search value
+                        $(this).attr('title', $(this).val());
+                        var regexr = '({search})'; //$(this).parents('th').find('select').val();
+                        var cursorPosition = this.selectionStart;
+                        // Search the column for that value
+                        api
+                            .column(colIdx)
+                            .search((this.value != "") ? regexr.replace('{search}', '((('+this.value+')))') : "", this.value != "", this.value == "")
+                            .draw();
+                        $(this).focus()[0].setSelectionRange(cursorPosition, cursorPosition);
+                    });
+            });
+        },
+ 
+
+                // creating BUTTONS
+                dom: 'lBfrtip',
+                buttons: [
+                    // COPY button
+                    {
+                    extend: 'copy',
+                    text: '<i class="fas fa-clone"></i>',
+                    className: 'btn btn-secondary',
+                    titleAttr: 'Copy',
+                    // choosing the columns to be copied
+                    exportOptions: {
+                        columns: [0,1, 2, ]
+                     },
+
+                },
+                //  EXCEL button
+                    {
+                    extend: 'excel',
+                    text: '<i class="fas fa-file-excel"></i>',
+                    className: 'btn btn-secondary',
+                    titleAttr: 'Excel',
+                    // choosing the columns to be exported
+                     exportOptions: {
+                        columns: [0,1, 2, ]
+                     },
+                },
+                //  PRINT button
+                    {
+                    extend: 'print',
+                    text: '<i class="fas fa-print"></i>',
+                    className: 'btn btn-secondary',
+                    titleAttr: 'Print',
+                    // choosing the columns to be printed
+                     exportOptions: {
+                        columns: [0,1,2,]
+                     },
+                    //  Font size when printing
+                    customize: function (win) {
+                        $(win.document.body).css('font-size', '10pt')
+                        $(win.document.body).find('table')
+                              .addClass('compact')
+                              .css('font-size', 'inherit');
+                    }
+                },
+                //  PDF button
+                    {
+                    extend: 'pdf',
+                    text: '<i class="fas fa-file-pdf"></i>',
+                    className: 'btn btn-secondary',
+                    titleAttr: 'PDF',
+                    // choosing the columns to be printed
+                     exportOptions: {
+                        columns: [0,1, 2, ]
+                     },
+                    // center the table
+                    tableHeader: {
+                        alignment: 'center'
+                    },
+                    // font size and optimization
+                    customize: function (doc) {
+                        doc.styles.tableHeader.alignment = 'center'; // Header position
+                        doc.styles.tableBodyOdd.alignment = 'center'; // body position 1 (grey color)
+                        doc.styles.tableBodyEven.alignment = 'center'; // body position 2 (white color)
+                        doc.styles.tableHeader.fontSize = 12; // Header font size
+                        doc.defaultStyle.fontSize = 10 // Body font-size
+                        // to get 100% width of the table
+                        doc.content[1].table.widths = Array(doc.content[1].table.body[1].length + 1).join('*').split('');
+                    }
+
+                },
+                ////////////////////////===============================               
+            ]
+
+            });
+            // search button
+            var newSearch = $("#contacts").DataTable();
+            $('#search').keyup(function() {
+            newSearch.search($(this).val()).draw();
+            })
+         });
+
+
+        </script>
+
+</body>
+</html>
+
+
+
+<!-- // Datatables configurations
                 paging: true,
                 pageLength: 10,
                 lengthChange: true,
@@ -143,22 +265,29 @@
                      exportOptions: {
                         columns: [0,1, 2, ]
                      },
-                //     //  Font size when printing
-                //     customize: function (win) {
-                //         $(win.document.body).css('font-size', '10pt')
-                //         $(win.document.body).find('table')
-                //               .addClass('compact')
-                //               .css('font-size', 'inherit');
-                //     }
+                    // center the table
+                    tableHeader: {
+                        alignment: 'center'
+                    },
+                    // font size and optimization
+                    customize: function (doc) {
+                        doc.styles.tableHeader.alignment = 'center'; // Header position
+                        doc.styles.tableBodyOdd.alignment = 'center'; // body position 1 (grey color)
+                        doc.styles.tableBodyEven.alignment = 'center'; // body position 2 (white color)
+                        doc.styles.tableHeader.fontSize = 12; // Header font size
+                        doc.defaultStyle.fontSize = 10 // Body font-size
+                        // to get 100% width of the table
+                        doc.content[1].table.widths = Array(doc.content[1].table.body[1].length + 1).join('*').split('');
+                    }
+
                 },
+                ////////////////////////===============================
                 
-            ]
-            });
-        </script>
-
-</body>
-</html>
+            ] -->
 
 
-
-
+<!-- search box outside -->
+<!-- var newSearch = $("#contacts").DataTable();
+$(#search).keyup(function() {
+    newSearch.search($(this).val()).draw();
+}) -->
