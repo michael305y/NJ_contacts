@@ -150,17 +150,6 @@ WSGI_APPLICATION = 'contacts.wsgi.application'
 #     }
 # }
 
-# # RAILWAY  Postgres DB details
-# import dj_database_url
-
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default = os.environ.get('default_DB'),
-#         conn_max_age=600,
-#         conn_health_checks=True,
-#     )
-# }
-
 # # RENDER  Postgres DB details
 import dj_database_url
 
