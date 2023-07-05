@@ -28,6 +28,12 @@ class Contact(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
+    # capitalize names
+    def clean(self):
+        self.school_name = self.school_name.title()
+        self.school_head = self.school_head.title()
+        self.Location = self.school_name.title()
+
     def __str__(self) -> str:
         return self.school_name
 
