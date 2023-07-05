@@ -87,7 +87,7 @@ MIDDLEWARE = [
 
 ]
 
-SITE_ID = 1
+SITE_ID = 2
 
 
 
