@@ -8,25 +8,25 @@ from django.core import validators
 # ==== method1 : creating native forms ========
 class Contacts_Form(forms.ModelForm):
     # giving fields attributes
-    school_code = forms.CharField(widget=forms.NumberInput(attrs={
-        'class': "",
-        'type': "number",
-        'placeholder': "Enter School Code",
-    }), label='')
+    # school_code = forms.CharField(widget=forms.NumberInput(attrs={
+    #     'class': "",
+    #     'type': "number",
+    #     'placeholder': "Enter School Code",
+    # }), label='')
 
-    school_name = forms.CharField(widget=forms.TextInput(attrs={
-        'class': "",
-        'type': "",
-        'placeholder': "Enter School Name",
-    }), label=''
-    )
+    # school_name = forms.CharField(widget=forms.TextInput(attrs={
+    #     'class': "",
+    #     'type': "",
+    #     'placeholder': "Enter School Name",
+    # }), label=''
+    # )
 
     # ============ data validation ========== #
-    def clean_school_code(self):
-        school_code = self.cleaned_data['school_code']
-        if not school_code.isdigit():
-            raise forms.ValidationError("Only numeric values are allowed.")
-        return school_code
+    # def clean_school_code(self):
+    #     school_code = self.cleaned_data['school_code']
+    #     if not school_code.isdigit():
+    #         raise forms.ValidationError("Only numeric values are allowed.")
+    #     return school_code
 
         
     

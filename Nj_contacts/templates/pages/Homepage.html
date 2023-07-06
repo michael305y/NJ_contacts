@@ -16,8 +16,12 @@
     <!-- to display the navbar contents -->
     {%  block navbar_content %}
     {% if user.is_authenticated %}
-    <i style="color: cyan;" class="fas fa-home-alt"></i>&nbsp;&nbsp; Home
-    <a href="">Logout</a>
+        <i style="color: cyan;" class="fas fa-home-alt"></i>&nbsp;&nbsp; Home
+   
+    <div class="welcome-message">
+        <p><strong>Logged in as, {{ user.username }}! to Elimu Njiru</strong></p>
+        
+      </div>
     {% endif %}
     {%  endblock navbar_content %}
 
