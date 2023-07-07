@@ -3,6 +3,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from . models import Contact
 from . forms import Contacts_Form
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from django.db.models import Q
 
@@ -10,6 +11,8 @@ from django.db.models import Q
 def home(request):
     return render(request, 'pages/Homepage.html',)
     
+
+@login_required(login_url='')   
 # to display info on the webpage
 def display_contacts(request):
     all_Contacts = Contact.objects.all()
@@ -28,6 +31,7 @@ def display_contacts(request):
 
     return render(request, 'pages/contacts.html', context=context)
 
+@login_required(login_url='')  
 def show_Contact_Form(request):
     form = Contacts_Form()
 
@@ -47,6 +51,7 @@ def show_Contact_Form(request):
 
     return render(request, 'pages/contacts_form.html', context=context)
 
+@login_required(login_url='')  
 # displays the school details
 def school_details(request, pk):
     specific_School = Contact.objects.get(id=pk)
@@ -57,6 +62,7 @@ def school_details(request, pk):
 
     return render(request, 'pages/school_details.html', context=context)
 
+@login_required(login_url='')  
 # function to delete selected school
 def delete_school_record(request, pk):
     if request.user.is_authenticated:
@@ -67,7 +73,8 @@ def delete_school_record(request, pk):
     else:
         messages.success(request, "You must be logged in")
         return redirect('')
-    
+
+@login_required(login_url='')     
 def update_school_record(request, pk):
     if request.user.is_authenticated:
         current_record = Contact.objects.get(id=pk)
@@ -90,6 +97,7 @@ def privacy_policy(request):
 import openpyxl
 from django.http import HttpResponse
 
+@login_required(login_url='')  
 def export_data_as_excel(request):
     data = Contact.objects.all()
 
