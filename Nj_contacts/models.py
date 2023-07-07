@@ -54,7 +54,7 @@ class Contact(models.Model):
         #  ^20409\d{3}$
     school_code = models.CharField(max_length=8, unique=True, validators=[RegexValidator(
                                                                             regex=r"^20409\d{3}$", 
-                                                                            message='wrong school code', 
+                                                                            message='School code should have 8 digits', 
                                                                             code='invalid_school_code'
                                                                                 )], )
 
@@ -74,14 +74,16 @@ class Contact(models.Model):
 
     # email = models.EmailField()
 
-    Location = models.CharField(max_length=20, choices=SCHOOL_LOCATION_CHOICES)
+    location = models.CharField(max_length=30, choices=SCHOOL_LOCATION_CHOICES)
 
     created_at = models.DateTimeField(auto_now_add=True)
 
     # capitalize names
     def clean(self):
         self.school_name = self.school_name.title()
+
         # self.school_head = self.school_head.title()
+
         self.Location = self.school_name.title()
 
     def __str__(self) -> str:
