@@ -33,7 +33,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # A better way to change DEBUG option automatically depending on the environment
 DEBUG = 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = ['216.24.57.253', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -84,7 +84,6 @@ MIDDLEWARE = [
 ]
 
 SITE_ID = 1
-
 
 
 # Provider specific settings
