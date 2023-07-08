@@ -30,20 +30,16 @@ load_dotenv(ENV_FILE_PATH)
 # SECRET_KEY = 'django-insecure-hn*%_&6id29=7f@s21pg)&#2_ssybq48qr!bz5d))o*ff6ubxm'
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
 # A better way to change DEBUG option automatically depending on the environment
 DEBUG = 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = ['*']
-
+ALLOWED_HOSTS = ['216.24.57.253', 'localhost']
 
 # Application definition
 
 INSTALLED_APPS = [
     # jazzmin
-    'jazzmin',
+    # 'jazzmin',
 
     'django.contrib.admin',
     'django.contrib.auth',
