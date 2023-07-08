@@ -9,13 +9,43 @@ from django.db.models import Q
 
 # Create your views here.
 def home(request):
-    return render(request, 'pages/Homepage.html',)
+    # total number of schools in the sub county
+    school_count = Contact.objects.all().count # counts the total number of schools available
+   
+    # total number of PRIMARY schools
+    primary_schools = Contact.objects.filter(school_category='PRIMARY').count
+    public_primary_schools = Contact.objects.filter(type_of_school='PUBLIC', school_category='PRIMARY').count # counts the number of PUBLIC PRIMARY schools available
+    private_primary_schools = Contact.objects.filter(type_of_school='PRIVATE', school_category='PRIMARY').count # counts the number of PRIVATE PRIMARY schools available
+
+    # total number of SECONDARY schools
+    secondary_schools = Contact.objects.filter(school_category='SECONDARY').count
+    
+    public_secondary_schools = Contact.objects.filter(type_of_school='PUBLIC', school_category='SECONDARY').count # counts the number of PUBLIC SECONDARY schools available
+    private_secondary_schools = Contact.objects.filter(type_of_school='PRIVATE', school_category='SECONDARY').count # counts the number of PRIVATE SECONDARY schools available
+   
+
+    context = {
+      'school_count' : school_count,
+      'primary_schools': primary_schools,
+      'public_primary_schools': public_primary_schools,
+      'private_primary_schools' : private_primary_schools,
+      'secondary_schools': secondary_schools,
+      'public_secondary_schools': public_secondary_schools,
+      'private_secondary_schools': private_secondary_schools
+
+
+    }
+
+    return render(request, 'pages/Homepage.html', context=context)
     
 
 @login_required(login_url='')   
 # to display info on the webpage
 def display_contacts(request):
     all_Contacts = Contact.objects.all()
+
+    school_count = Contact.objects.all().count
+
     # performing searches
     if 'q' in request.GET:
         q=request.GET['q']
@@ -26,7 +56,8 @@ def display_contacts(request):
     # all_Contacts = Contact.objects.all()
 
     context = {
-      'all_Contacts': all_Contacts
+      'all_Contacts': all_Contacts,
+      'school_count' : school_count
     }
 
     return render(request, 'pages/contacts.html', context=context)
@@ -128,6 +159,12 @@ def export_data_as_excel(request):
 
     return response
 
+
+# count the number of schools
+def dashboard(request):
+    school_count = Contact.objects.count()
+    context = {'school_count': school_count}
+    return render(request, 'dashboard.html', context)
 
 
 

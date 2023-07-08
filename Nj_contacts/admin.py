@@ -5,8 +5,8 @@ from . models import Contact
 class My_admin(admin.ModelAdmin):
     # the list needs to be explicitly defined with the appropriate fields
     # generalization with the __all__ special method wont work
-    list_display = ['school_code','school_name', 'type_of_school','created_at',]
-    search_fields = ['school_code','school_name','created_at', 'type_of_school']
+    list_display = ['school_code','school_name', 'type_of_school', 'school_category', 'created_at',]
+    search_fields = ['school_code','school_name', 'created_at', 'type_of_school']
     list_per_page = 10
     
     

@@ -22,7 +22,6 @@ ENV_FILE_PATH = os.path.join(BASE_DIR, '../.contacts/CONFIG/.env')
 
 load_dotenv(ENV_FILE_PATH)
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 

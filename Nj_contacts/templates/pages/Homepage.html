@@ -62,7 +62,18 @@
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
                   <h5 class="card-title"><a href="{% url 'submit_Contacts' %}">Insert a new school</a></h5>
-                  <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                  <p class="card-text">Number of schools in Njiru subcounty.</p>
+
+                  <h5><p class="card-text"><strong>{{ school_count }} schools available.</strong></p></h5>
+
+                  <p class="card-text"><strong>{{ primary_schools }} primary schools</strong></p>
+
+                  <p class="card-text"><strong>{{ public_primary_schools }} public primary schools</strong></p>
+                  <p class="card-text"><strong>{{ private_primary_schools }} private primary schools</strong></p>
+                  <p class="card-text"><strong>{{ secondary_schools }} secondary schools </strong></p>
+                  <p class="card-text"><strong>{{ public_secondary_schools }} public secondary schools</strong></p>
+                  <p class="card-text"><strong>{{ private_secondary_schools }} private secondary schools</strong></p>
+
                 </div>
                 <div class="card-footer">
                   <small class="text-body-secondary">Last updated 3 mins ago</small>
@@ -74,11 +85,14 @@
               <div class="card h-100 text-bg-dark mb-3" style="max-width: 18rem;">
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title"><a href="{% url 'account_logout' %}">Logout</a></h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                  <h5 class="card-title"><a href="{% url '' %}">Enrolment</a></h5>
+                  <p class="card-text">The total enrolment of all schools in Njiru subcounty.</p>
+
+                  
+
                 </div>
                 <div class="card-footer">
-                  <small class="text-body-primary">Last updated 3 mins ago</small>
+                  <small class="text-body-primary">Last updated {{ created_at }} mins ago</small>
                 </div>
               </div>
             </div>
