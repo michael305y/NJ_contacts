@@ -62,6 +62,8 @@ number of schools : {{ school_count }}
                     <th>ID</th>
                     <th>School code</th>
                     <th>School Name</th>
+                    <th>School Type</th>
+                    <th>School Category</th>
                 </tr>
             </thead>
             <!-- Data from DB or the backend -->
@@ -76,6 +78,8 @@ number of schools : {{ school_count }}
                             </td>
                             <td>{{ contact.school_code }}</td>
                             <td>{{ contact.school_name }}</td>
+                            <td>{{ contact.type_of_school }}</td>
+                            <td>{{ contact.school_category }}</td>
                         </tr>
                     {% endfor %}
                 {% endif %}
