@@ -260,3 +260,4 @@ def delete_KCPE_collection_point(request, pk):
 
 
 
+
