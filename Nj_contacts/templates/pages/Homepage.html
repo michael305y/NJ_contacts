@@ -38,8 +38,8 @@
       </div>
       <br />
     </div>
-      
-        <!-- ... -->
+
+    <!-- ... -->
         <!-- Display user-specific content or redirect to another page only ifa a user is logged in or authenticated -->
         <!-- <div class="card-group"> -->
           <!-- =============================================================== -->
@@ -138,11 +138,71 @@
           2 days ago
         </div>
       </div>
-      
-      
+           
       <!-- ... -->
       {% endif %}
     </div>
+    
+    <!-- ===================== -->
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>School Search</title>
+      <style>
+        .result {
+          margin-top: 10px;
+          padding: 10px;
+          border: 1px solid #ccc;
+          display: none;
+        }
+      </style>
+      <script>
+        function searchSchool() {
+          var input = document.getElementById('schoolCode').value;
+          var resultDiv = document.getElementById('result');
+    
+          // Make an AJAX request to the Django server
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+              var response = JSON.parse(xhr.responseText);
+    
+              // if (response.school_name) {
+              //   resultDiv.innerHTML = response.school_name;
+              //   resultDiv.style.display = 'block';
+
+                if (response.school_name) {
+                    var resultText = "School Name: " + response.school_name + "<br>";
+                    resultText += "entry: " + response.entry + "<br>";
+                    resultText += "collection_point: " + response.collection_point + "<br>";
+                    
+                    resultDiv.innerHTML = resultText;
+                    resultDiv.style.display = 'block';
+
+              } else {
+                resultDiv.innerHTML = 'No matching school found.';
+                resultDiv.style.display = 'block';
+              }
+            }
+          };
+    
+          xhr.open('GET', '/search/?query=' + input, true); // Modify the URL to match your Django URL pattern
+          xhr.send();
+        }
+      </script>
+    </head>
+    <body>
+      <h2>School Search</h2>
+      <input type="text" id="schoolCode" placeholder="Enter schoolcode or name">
+      <button onclick="searchSchool()">Search</button>
+    
+      <div id="result" class="result"></div>
+    </body>
+    </html>
+    
+
+    <!-- ===================== -->
+
   </body>
   {% endblock content %}
 </html>

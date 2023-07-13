@@ -205,7 +205,7 @@ def display_kcpe_collection_points(request):
 @login_required(login_url='')  
 def show_KCPE_collection_form(request):
     form = KCPE_collection_points_form
-
+    
     if request.method == 'POST':
         form = KCPE_collection_points_form(request.POST)
 
@@ -248,6 +248,11 @@ def display_detailed_KCPE_collection_point(request, pk):
 
     return render(request, 'pages/kcpe_collection_point_details.html', context=context)
 
+
+# =======================================================
+from django.views.decorators.http import require_http_methods
+
+require_http_methods(['DELETE'])
 # deleting a collection point
 def delete_KCPE_collection_point(request, pk):
     delete_collection_point = KCPE_collection_point.objects.get(id=pk)
@@ -255,6 +260,68 @@ def delete_KCPE_collection_point(request, pk):
 
     return redirect('display_kcpe_collection_points')
 
+
+# search for collection points
+from django.http import JsonResponse
+
+# for users who are not logged in can search for their school
+def search_school(request):
+    query = request.GET.get('query', '')
+
+    schools = KCPE_collection_point.objects.filter(
+        Q(school_code__icontains=query) |   # searches by school_code
+        Q(school_name__icontains=query)     # searches by school name
+    )
+
+    if schools.exists():
+        school = schools.first()
+        response = {
+            'school_name': school.school_name,
+            'entry': school.entry,
+            'collection_point': school.collection_point
+        }
+    else:
+        response = {'school_name': None, 'entry': None, 'collection_point': None}
+
+    return JsonResponse(response)
+
+
+
+    # query = request.GET.get('query', '')
+
+    # try:
+    #     # Searching by school code
+    #     school = KCPE_collection_point.objects.get(school_code=query)
+    # except KCPE_collection_point.DoesNotExist:
+    #     try:
+    #         # Searching by school name
+    #         school = KCPE_collection_point.objects.get(school_name=query)
+    #     except KCPE_collection_point.DoesNotExist:
+    #         school = None
+
+    # if school:
+    #     response = {
+    #         'school_name': school.school_name,
+    #         'entry': school.entry,
+    #         'collection_point': school.collection_point
+    #     }
+    # else:
+    #     response = {'school_name': None, 'entry': None, 'collection_point': None}
+
+    # return JsonResponse(response)
+
+    
+
+
+
+
+
+
+
+
+
+    
+    
 
 
 

@@ -19,6 +19,11 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <title>NJiru Education</title>
+
+    <!-- ============htmx script ========================-->
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+    <!-- ===========end of htmx script ===================== -->
+
 </head>
 <body>
         <div class="wrapper">
@@ -78,7 +83,7 @@
         <script>
 $(document).ready(function() {
   // Setup - add a text input to each footer cell
-  $('#contacts thead tr').clone(true).addClass('filters').appendTo('#contacts thead');
+  // $('#contacts thead tr').clone(true).addClass('filters').appendTo('#contacts thead');
 
   // table 2
   $('#kcpe_collection_points thead tr').clone(true).addClass('filters').appendTo('#kcpe_collection_points thead');
@@ -185,21 +190,49 @@ $(document).ready(function() {
     ]
   };
 
-  if ($('#contacts').length > 0) {
-    $('#contacts').DataTable(tableConfig);
-  }
+  // if ($('#contacts').length > 0) {
+  //   $('#contacts').DataTable(tableConfig);
+  // }
 
   if ($('#kcpe_collection_points').length > 0) {
     $('#kcpe_collection_points').DataTable(tableConfig);
   }
+
+  
+  // htmx event listener after swap
+  document.body.addEventListener('htmx:afterSwap', function(event) {
+    if ($('#kcpe_collection_points').hasClass('dataTable')) {
+      $('#kcpe_collection_points').DataTable().destroy();
+    }
+
+    if ($('#kcpe_collection_points').length > 0) {
+      $('#kcpe_collection_points').DataTable(tableConfig);
+    }
+  });
+
+// ///////////////////////////////////////////////////////////////
 
   // Search button
   var newSearch = $("#contacts").DataTable();
   $('#search').keyup(function() {
     newSearch.search($(this).val()).draw();
   });
+  
 });
 
+</script>
+
+<!-- ==== htmx event listener to make to make htmx requests possible by adding CSRF token to headers========= -->
+<script>
+  document.body.addEventListener('htmx:configRequest', (event) => {
+      event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+  })
+</script>
+<!-- ======================== htmx====================================== -->
+<script>
+ document.body.addEventListener('htmx:afterSwap', function(event) {
+  window.location.reload();
+});
 </script>
 
 </body>

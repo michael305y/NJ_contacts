@@ -108,7 +108,16 @@ class KCPE_collection_point(models.Model):
                                                                             message='School code should have 8 digits', 
                                                                             code='invalid_school_code'
                                                                                 )], )
-    school_name = models.CharField(max_length=200)
+    school_name = school_name = models.CharField(max_length=200,
+                                                 unique=True,
+                                                 validators=[
+                                                 RegexValidator(
+                                                               regex=r"^[A-Za-z\s.'-]+$",
+                                                               message='Only letters are allowed',
+                                                               code='invalid_school_name'
+                                                               )
+                                                            ]
+                                                )
     entry = models.IntegerField()
     collection_point =  models.CharField(max_length=30, choices=EXAM_COLLECTION_POINTS)
     route = models.IntegerField(default=90)

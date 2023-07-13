@@ -58,3 +58,9 @@
 .swal-modal {
     background-color: aliceblue;
 }
+
+
+tr.htmx-swapping td {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}

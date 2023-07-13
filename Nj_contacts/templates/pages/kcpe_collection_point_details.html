@@ -1,4 +1,4 @@
-{% extends 'pages/base.html' %}
+{% extends 'pages/base_collection_point.html' %}
 
 {% block content %}
 <!-- <h2>School Details</h2> -->
@@ -24,9 +24,14 @@
     <button onclick="showConfirmationDialog('{{ specific_collection_point.id }}')" class="btn btn-danger">Delete</button>
 
     <a href="{% url 'update_KCPE_collection_point' specific_collection_point.id %}" class="btn btn-secondary">Update</a>
+
+<!-- ========= htmx =========================== -->
+
+<!-- end of htmx ======== -->
   </div>
 </div>
 
+<!-- to show a prompt to delete -->
 <script>
   function showConfirmationDialog(collectionPointId) {
     var confirmation = confirm("Are you sure you want to delete this collection point?");

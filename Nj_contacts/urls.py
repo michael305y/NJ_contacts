@@ -32,6 +32,10 @@ urlpatterns = [
     path('privacy_policy', views.privacy_policy, name='privacy_policy'),
 
     path('export_data_as_excel', views.export_data_as_excel, name='export_data_as_excel'),
+    
+
+    # ========= htmx url search ========================================================================
+    path('search/', views.search_school, name='search_school')
 
     
     # path('accounts/signup/', views.privacy_policy, )

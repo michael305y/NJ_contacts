@@ -49,7 +49,10 @@ number of collection points : {{ collection_points_count }}
         <table class="table table-bordered table-striped table-hover table-sm caption-top" id="kcpe_collection_points" style="text-align: center;">
             <thead class="table-success">
                 <tr>
-                    <th>ID</th>
+
+                    <!-- <th>Action</th> -->
+
+                    <th>Actions</th>
                     <th>School code</th>
                     <th>School Name</th>
                     <th>Entry</th>
@@ -58,14 +61,19 @@ number of collection points : {{ collection_points_count }}
                 </tr>
             </thead>
             <!-- Data from DB or the backend -->
-            <tbody>
+            <tbody hx-confirm="Are you sure you want delete?" hx-target="closest tr" hx-swap="outerHTML swap:1s">
                 {% if all_collection_points %}
                     {% for collection_point in all_collection_points %}
                         <tr>
+
                             <td>
+                                <button id="deleteBtn" class="btn btn-danger" hx-delete="delete_KCPE_collection_point/{{ collection_point.id }}">
+                                    Delete
+                                  </button>
+
                                 <!-- to show a collection point in details -->
                                 
-                                <a href="{% url 'display_detailed_KCPE_collection_point' collection_point.id %}"> {{ collection_point.id }}</a>
+                                <a href="{% url 'display_detailed_KCPE_collection_point' collection_point.id %}"> View details</a>
         
                             </td>
                             <td>{{ collection_point.school_code }}</td>
@@ -80,6 +88,8 @@ number of collection points : {{ collection_points_count }}
         </table>
     </div>  <!-- END // container -->
     <br><br><br>
+    <!-- ============================ -->
+  
 {% endblock content %}
 
 
