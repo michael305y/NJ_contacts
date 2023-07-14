@@ -112,7 +112,7 @@ class KCPE_collection_point(models.Model):
                                                  unique=True,
                                                  validators=[
                                                  RegexValidator(
-                                                               regex=r"^[A-Za-z\s.'-]+$",
+                                                               regex = r"^[A-Za-z\s.'&-]+$",
                                                                message='Only letters are allowed',
                                                                code='invalid_school_name'
                                                                )
@@ -120,7 +120,8 @@ class KCPE_collection_point(models.Model):
                                                 )
     entry = models.IntegerField()
     collection_point =  models.CharField(max_length=30, choices=EXAM_COLLECTION_POINTS)
-    route = models.IntegerField(default=90)
+    # route = models.IntegerField(default=90)
+    route = models.IntegerField()
 
     created_at = models.DateTimeField(auto_now_add=True)
 

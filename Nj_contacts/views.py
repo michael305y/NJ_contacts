@@ -202,7 +202,7 @@ def display_kcpe_collection_points(request):
     return render(request, 'pages/collection_points.html', context=context)
 
 # to display the KCPE collection form
-@login_required(login_url='')  
+@login_required(login_url='') 
 def show_KCPE_collection_form(request):
     form = KCPE_collection_points_form
     
@@ -239,6 +239,7 @@ def update_KCPE_collection_point(request, pk):
     
 
 # display KCPE collection point in details
+@login_required(login_url='')  
 def display_detailed_KCPE_collection_point(request, pk):
     specific_collection_point = KCPE_collection_point.objects.get(id=pk)
 
