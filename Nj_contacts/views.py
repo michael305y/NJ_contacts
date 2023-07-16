@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 
-from . models import Contact, KCPE_collection_point
-from . forms import Contacts_Form, KCPE_collection_points_form
+from . models import Contact, KCPE_collection_point, Kepsea_collection_point
+from . forms import Contacts_Form, KCPE_collection_points_form, KEPSEA_collection_points_form
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -262,6 +262,56 @@ def delete_KCPE_collection_point(request, pk):
     return redirect('display_kcpe_collection_points')
 
 
+# ====================//// KEPSEA COLLECTION POINT VIEWS =================
+# display the KEPSEA collection points
+# @login_required(login_url='') 
+def display_kepsea_collection_points(request):
+    all_collection_points = Kepsea_collection_point.objects.all()
+
+    collection_points_count = Kepsea_collection_point.objects.all().count
+
+    # performing searches
+    if 'q' in request.GET:
+        q=request.GET['q']
+
+         # Filtering by collection point by name or school code
+        all_collection_points = Kepsea_collection_point.objects.filter(Q(school_name__icontains=q) | Q(school_code__icontains=q))
+
+    context = {
+      'all_collection_points': all_collection_points,
+      'collection_points_count' : collection_points_count
+    }
+
+    return render(request, 'pages/kepsea/display_kepsea_collection_points.html', context=context)
+
+# display the KEPSEA collection form
+@login_required(login_url='') 
+def show_KEPSEA_collection_form(request):
+    form = KEPSEA_collection_points_form
+    
+    if request.method == 'POST':
+        form = KEPSEA_collection_points_form(request.POST)
+
+        # checking validity of the form b4 saving
+        if form.is_valid():
+            form.save() 
+            messages.success(request, 'collection point added')
+
+            return redirect('display_kepsea_collection_points')
+        
+    context = {
+        'form' : form
+    }
+
+    return render(request, 'pages/kepsea/collection_form.html', context=context)
+
+
+# ==================== END OF KEPSEA COLLECTION POINT VIEWS ==============
+
+
+
+# ====================////// SEARCH OPTION USING AJAX FOR COLLECTIION POINTS /////==========
+
 # search for collection points
 from django.http import JsonResponse
 
@@ -310,6 +360,8 @@ def search_school(request):
     #     response = {'school_name': None, 'entry': None, 'collection_point': None}
 
     # return JsonResponse(response)
+# =============== END OF SERACH OPTION ======================================
+
 
     
 

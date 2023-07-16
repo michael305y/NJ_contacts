@@ -1,5 +1,5 @@
 from django.contrib import admin
-from . models import Contact, KCPE_collection_point
+from . models import Contact, KCPE_collection_point, Kcse_collection_point, Kepsea_collection_point
 
 # creating an admin class to show all the sepcified fields on the admin page
 class My_admin(admin.ModelAdmin):
@@ -25,3 +25,7 @@ class My_admin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Contact, My_admin)
 admin.site.register(KCPE_collection_point)
+
+admin.site.register(Kepsea_collection_point)
+
+admin.site.register(Kcse_collection_point)

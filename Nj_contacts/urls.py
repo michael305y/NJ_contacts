@@ -15,7 +15,8 @@ urlpatterns = [
     path('delete_school_record/<int:pk>', views.delete_school_record, name='delete_school_record'),
 
 
-    # ============ collection points view ===============================================================
+    # ============//// COLLECTION POINTS VIEWS ////===============================================================
+    # ============KCPE views ===============================================================
     path('display_kcpe_collection_points', views.display_kcpe_collection_points, name='display_kcpe_collection_points'), # to display KCPE collection points
 
     path('show_KCPE_collection_form', views.show_KCPE_collection_form, name='show_KCPE_collection_form'),
@@ -25,6 +26,20 @@ urlpatterns = [
     path('display_detailed_KCPE_collection_point/<int:pk>', views.display_detailed_KCPE_collection_point, name='display_detailed_KCPE_collection_point'),
 
     path('delete_KCPE_collection_point/<int:pk>', views.delete_KCPE_collection_point, name='delete_KCPE_collection_point'),
+
+    # ============ end of KCPE views===============================================================
+
+    
+    # ============ KEPSEA views===============================================================
+    path('display_kepsea_collection_points', views.display_kepsea_collection_points, name='display_kepsea_collection_points'),
+
+    path('show_KEPSEA_collection_form', views.show_KEPSEA_collection_form, name='show_KEPSEA_collection_form'),
+
+    
+
+    # ============end of KEPSEA views===============================================================
+
+
 
 
 

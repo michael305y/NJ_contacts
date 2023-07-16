@@ -102,13 +102,78 @@ class Contact(models.Model):
 
 
 # Collection points of KCSE, KCPE and KEPSEA model/Table
+#=========== KCPE collection point ==================
 class KCPE_collection_point(models.Model):
     school_code = models.CharField(max_length=8, unique=True, validators=[RegexValidator(
                                                                             regex=r"^20409\d{3}$", 
                                                                             message='School code should have 8 digits', 
                                                                             code='invalid_school_code'
                                                                                 )], )
-    school_name = school_name = models.CharField(max_length=200,
+    school_name = models.CharField(max_length=200,
+                                                 unique=True,
+                                                 validators=[
+                                                 RegexValidator(
+                                                               regex = r"^[A-Za-z\s.'&-]+$",
+                                                               message='Only letters are allowed',
+                                                               code='invalid_school_name'
+                                                               )
+                                                            ]
+                                                )
+    entry = models.IntegerField()
+    collection_point =  models.CharField(max_length=30, choices=EXAM_COLLECTION_POINTS)
+    # route = models.IntegerField(default=90)
+    route = models.IntegerField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    # capitalize names
+    def clean(self):
+        self.school_name = self.school_name.upper()
+
+    def __str__(self) -> str:
+        return self.school_name
+    
+
+# ============== KEPSEA Collection point =================
+class Kepsea_collection_point(models.Model):
+    school_code = models.CharField(max_length=8, unique=True, validators=[RegexValidator(
+                                                                            regex=r"^20409\d{3}$", 
+                                                                            message='School code should have 8 digits', 
+                                                                            code='invalid_school_code'
+                                                                                )], )
+    school_name = models.CharField(max_length=200,
+                                                 unique=True,
+                                                 validators=[
+                                                 RegexValidator(
+                                                               regex = r"^[A-Za-z\s.'&-]+$",
+                                                               message='Only letters are allowed',
+                                                               code='invalid_school_name'
+                                                               )
+                                                            ]
+                                                )
+    entry = models.IntegerField()
+    collection_point =  models.CharField(max_length=30, choices=EXAM_COLLECTION_POINTS)
+    # route = models.IntegerField(default=90)
+    route = models.IntegerField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    # capitalize names
+    def clean(self):
+        self.school_name = self.school_name.upper()
+
+    def __str__(self) -> str:
+        return self.school_name
+    
+
+# ============== KCSE Collection point =================
+class Kcse_collection_point(models.Model):
+    school_code = models.CharField(max_length=8, unique=True, validators=[RegexValidator(
+                                                                            regex=r"^20409\d{3}$", 
+                                                                            message='School code should have 8 digits', 
+                                                                            code='invalid_school_code'
+                                                                                )], )
+    school_name = models.CharField(max_length=200,
                                                  unique=True,
                                                  validators=[
                                                  RegexValidator(
