@@ -26,6 +26,8 @@ def home(request):
     # total KCPE collection points
     KCPE_collection_point_count = KCPE_collection_point.objects.all().count
 
+    KEPSEA_collection_point_count = Kepsea_collection_point.objects.all().count # total kepsea collection points
+
     # last updated item/ school added
     contact = Contact.objects.last()
     last_updated = contact.created_at    # gets the time at which the last school was added
@@ -42,6 +44,8 @@ def home(request):
       'last_updated' : last_updated,
 
       'KCPE_collection_point_count': KCPE_collection_point_count,
+
+      'KEPSEA_collection_point_count': KEPSEA_collection_point_count,
 
     }
 
@@ -285,7 +289,7 @@ def display_kepsea_collection_points(request):
     return render(request, 'pages/kepsea/display_kepsea_collection_points.html', context=context)
 
 # display the KEPSEA collection form
-@login_required(login_url='') 
+# @login_required(login_url='') 
 def show_KEPSEA_collection_form(request):
     form = KEPSEA_collection_points_form
     
