@@ -320,10 +320,33 @@ def show_KEPSEA_collection_form(request):
 from django.http import JsonResponse
 
 # for users who are not logged in can search for their school
+# === for KCPE
 def search_school(request):
     query = request.GET.get('query', '')
 
     schools = KCPE_collection_point.objects.filter(
+        Q(school_code__icontains=query) |   # searches by school_code
+        Q(school_name__icontains=query)     # searches by school name
+    )
+
+    if schools.exists():
+        school = schools.first()
+        response = {
+            'school_name': school.school_name,
+            'entry': school.entry,
+            'collection_point': school.collection_point
+        }
+    else:
+        response = {'school_name': None, 'entry': None, 'collection_point': None}
+
+    return JsonResponse(response)
+
+
+# === for KEPSEA
+def search_kepsea(request):
+    query = request.GET.get('query', '')
+
+    schools = Kepsea_collection_point.objects.filter(
         Q(school_code__icontains=query) |   # searches by school_code
         Q(school_name__icontains=query)     # searches by school name
     )

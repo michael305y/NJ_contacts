@@ -145,7 +145,7 @@ class Kepsea_collection_point(models.Model):
                                                  unique=True,
                                                  validators=[
                                                  RegexValidator(
-                                                               regex = r"^[A-Za-z\s.'&-]+$",
+                                                               regex = r'^[A-Za-z\s.\'&"-]+$',
                                                                message='Only letters are allowed',
                                                                code='invalid_school_name'
                                                                )

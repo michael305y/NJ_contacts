@@ -144,6 +144,7 @@
       {% endif %}
     </div>
     
+
     <!-- ===================== -->
     <!DOCTYPE html>
     <html>
@@ -158,8 +159,26 @@
         }
       </style>
       <script>
-        function searchSchool() {
-          var input = document.getElementById('schoolCode').value;
+        function toggleDiv() {
+          var tableSelect = document.getElementById('tableSelect');
+          var selectedTable = tableSelect.options[tableSelect.selectedIndex].value;
+          var kcpeDiv = document.getElementById('kcpeDiv');
+          var kepseaDiv = document.getElementById('kepseaDiv');
+    
+          // Hide both divs initially
+          kcpeDiv.style.display = 'none';
+          kepseaDiv.style.display = 'none';
+    
+          // Show the corresponding div based on the selected table
+          if (selectedTable === 'kcpe') {
+            kcpeDiv.style.display = 'block';
+          } else if (selectedTable === 'kepsea') {
+            kepseaDiv.style.display = 'block';
+          }
+        }
+    
+        function searchKCPE() {
+          var input = document.getElementById('kcpeCode').value;
           var resultDiv = document.getElementById('result');
     
           // Make an AJAX request to the Django server
@@ -168,18 +187,13 @@
             if (xhr.readyState === 4 && xhr.status === 200) {
               var response = JSON.parse(xhr.responseText);
     
-              // if (response.school_name) {
-              //   resultDiv.innerHTML = response.school_name;
-              //   resultDiv.style.display = 'block';
-
-                if (response.school_name) {
-                    var resultText = "School Name: " + response.school_name + "<br>";
-                    resultText += "entry: " + response.entry + "<br>";
-                    resultText += "collection_point: " + response.collection_point + "<br>";
-                    
-                    resultDiv.innerHTML = resultText;
-                    resultDiv.style.display = 'block';
-
+              if (response.school_name) {
+                var resultText = "School Name: " + response.school_name + "<br>";
+                resultText += "Entry: " + response.entry + "<br>";
+                resultText += "Collection Point: " + response.collection_point;
+    
+                resultDiv.innerHTML = resultText;
+                resultDiv.style.display = 'block';
               } else {
                 resultDiv.innerHTML = 'No matching school found.';
                 resultDiv.style.display = 'block';
@@ -187,22 +201,62 @@
             }
           };
     
-          xhr.open('GET', '/search/?query=' + input, true); // Modify the URL to match your Django URL pattern
+          xhr.open('GET', '/search/?table=kcpe&query=' + input, true);
+          xhr.send();
+        }
+    
+        // search for KEPSEA        
+        function searchKEPSEA() {
+          var input = document.getElementById('kepseaCode').value;
+          var resultDiv = document.getElementById('result');
+    
+          // Make an AJAX request to the Django server
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+              var response = JSON.parse(xhr.responseText);
+    
+              if (response.school_name) {
+                var resultText = "School Name: " + response.school_name + "<br>";
+                resultText += "Entry: " + response.entry + "<br>";
+                resultText += "Collection Point: " + response.collection_point;
+    
+                resultDiv.innerHTML = resultText;
+                resultDiv.style.display = 'block';
+              } else {
+                resultDiv.innerHTML = 'No matching school found.';
+                resultDiv.style.display = 'block';
+              }
+            }
+          };
+    
+          xhr.open('GET', '/search_kepsea/?table=kepsea&query=' + input, true);
           xhr.send();
         }
       </script>
     </head>
     <body>
       <h3>Quick School Search Collection Points</h3>
-      <input type="text" id="schoolCode" placeholder="Enter schoolcode or name">
-      <button onclick="searchSchool()">Search</button>
     
+      <select id="tableSelect" onchange="toggleDiv()">
+        <option value="kcpe">KCPE</option>
+        <option value="kepsea">KEPSEA</option>
+      </select>
+    
+      <div id="kcpeDiv" style="display: none;">
+        <input type="text" id="kcpeCode" placeholder="Enter KCPE school code">
+        <button onclick="searchKCPE()">Search KCPE</button>
+      </div>
+    
+      <div id="kepseaDiv" style="display: none;">
+        <input type="text" id="kepseaCode" placeholder="Enter KEPSEA school code">
+        <button onclick="searchKEPSEA()">Search KEPSEA</button>
+      </div>
+    
+      <br><br>
       <div id="result" class="result"></div>
     </body>
     </html>
-  
-    <!-- ===================== -->
-
-  </body>
-  {% endblock content %}
-</html>
+    
+            
+{% endblock content %}

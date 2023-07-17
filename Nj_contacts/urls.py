@@ -35,7 +35,7 @@ urlpatterns = [
 
     path('show_KEPSEA_collection_form', views.show_KEPSEA_collection_form, name='show_KEPSEA_collection_form'),
 
-    
+
 
     # ============end of KEPSEA views===============================================================
 
@@ -50,7 +50,9 @@ urlpatterns = [
     
 
     # ========= htmx url search ========================================================================
-    path('search/', views.search_school, name='search_school')
+    path('search/', views.search_school, name='search_school'),
+
+    path('search_kepsea/', views.search_kepsea, name='search_kepsea'),
 
     
     # path('accounts/signup/', views.privacy_policy, )
