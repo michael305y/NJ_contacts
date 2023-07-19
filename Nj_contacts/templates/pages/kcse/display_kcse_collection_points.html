@@ -5,7 +5,7 @@
 {%  block navbar_content %}
 <i style="color: cyan;" class="fas fa-home-alt"></i>&nbsp;Home &nbsp;&nbsp;
 
-<i style="color: cyan;"  class="fas fa--alt"></i>&nbsp;Add KEPSEA Collection Point
+<i style="color: cyan;"  class="fas fa--alt"></i>&nbsp;Add KCSE Collection Point
 
 {%  endblock navbar_content %}
 
@@ -16,7 +16,7 @@
 number of collection points : {{ collection_points_count }}
 <br>
 
-   <a href="{% url 'show_KEPSEA_collection_form' %}">Insert a new KEPSEA Collection Point</a>
+   <a href="{% url 'show_KCSE_collection_form' %}">Insert a new KCSE Collection Point</a>
 
     <!-- message from backend -->
     <!-- JS script -->
@@ -67,13 +67,13 @@ number of collection points : {{ collection_points_count }}
                         <tr>
 
                             <td>
-                                <button id="deleteBtn" class="btn btn-danger" hx-delete="delete_KEPSEA_collection_point/{{ collection_point.id }}">
+                                <button id="deleteBtn" class="btn btn-danger" hx-delete="delete_KCSE_collection_point/{{ collection_point.id }}">
                                     Delete
                                   </button>
 
                                 <!-- to show a collection point in details -->
                                 
-                                <a href="{% url 'display_detailed_KEPSEA_collection_point' collection_point.id %}"> View details</a>
+                                <a href="{% url 'display_detailed_KCSE_collection_point' collection_point.id %}"> View details</a>
         
                             </td>
                             <td>{{ collection_point.school_code }}</td>

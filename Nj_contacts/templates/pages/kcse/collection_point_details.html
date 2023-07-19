@@ -1,0 +1,45 @@
+{% extends 'pages/base_collection_point.html' %}
+
+{% block content %}
+<!-- <h2>School Details</h2> -->
+
+<div class="card">
+  <h5 class="card-header">KCSE Collection Point Details</h5>
+  <div class="card-body">
+    <h5 class="card-title">{{ specific_collection_point.school_name }}</h5>
+    <p class="card-text">
+      {{ specific_collection_point.school_code }}
+      <br />
+      {{ specific_collection_point.entry }}
+      <br />
+      {{ specific_collection_point.collection_point }}
+      <br />
+      {{ specific_collection_point.route }}
+      <br />
+      {{ specific_collection_point.created_at }}
+      <br />
+    </p>
+    <a href="{% url 'display_kcse_collection_points' %}" class="btn btn-primary">Go Back</a>
+
+    <button onclick="showConfirmationDialog('{{ specific_collection_point.id }}')" class="btn btn-danger">Delete</button>
+
+    <a href="{% url 'update_KCSE_collection_point' specific_collection_point.id %}" class="btn btn-secondary">Update</a>
+
+<!-- ========= htmx =========================== -->
+
+<!-- end of htmx ======== -->
+  </div>
+</div>
+
+<!-- to show a prompt to delete -->
+<script>
+  function showConfirmationDialog(collectionPointId) {
+    var confirmation = confirm("Are you sure you want to delete this collection point?");
+
+    if (confirmation) {
+      // User confirmed, perform the deletion action
+      window.location.href = "{% url 'delete_KCSE_collection_point' pk=specific_collection_point.id %}";
+    }
+  }
+</script>
+{% endblock %}

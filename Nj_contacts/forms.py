@@ -1,5 +1,5 @@
 from django.forms import ModelForm, widgets
-from . models import Contact, KCPE_collection_point, Kepsea_collection_point
+from . models import Contact, KCPE_collection_point, Kepsea_collection_point, Kcse_collection_point
 
 from django import forms
 from django.core import validators
@@ -57,6 +57,12 @@ class KCPE_collection_points_form(forms.ModelForm):
 class KEPSEA_collection_points_form(forms.ModelForm):
     class Meta:
         model = Kepsea_collection_point
+        fields = "__all__"
+
+# KCSE collection points FORM
+class KCSE_collection_points_form(forms.ModelForm):
+    class Meta:
+        model = Kcse_collection_point
         fields = "__all__"
 
 

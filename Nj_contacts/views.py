@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 
-from . models import Contact, KCPE_collection_point, Kepsea_collection_point
-from . forms import Contacts_Form, KCPE_collection_points_form, KEPSEA_collection_points_form
+from . models import Contact, KCPE_collection_point, Kepsea_collection_point, Kcse_collection_point
+from . forms import Contacts_Form, KCPE_collection_points_form, KEPSEA_collection_points_form, KCSE_collection_points_form
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -28,6 +28,8 @@ def home(request):
 
     KEPSEA_collection_point_count = Kepsea_collection_point.objects.all().count # total kepsea collection points
 
+    KCSE_collection_point_count = Kcse_collection_point.objects.all().count # total kepsea collection points
+
     # last updated item/ school added
     contact = Contact.objects.last()
     last_updated = contact.created_at    # gets the time at which the last school was added
@@ -46,6 +48,8 @@ def home(request):
       'KCPE_collection_point_count': KCPE_collection_point_count,
 
       'KEPSEA_collection_point_count': KEPSEA_collection_point_count,
+
+      'KCSE_collection_point_count': KCSE_collection_point_count,
 
     }
 
@@ -184,6 +188,7 @@ def dashboard(request):
 
 
 # ====================////// EXAMINATION COLLECTION POINTS ===============================================
+# ====================////// KCPE COLLECTION POINTS ===============================================
 @login_required(login_url='')   
 # to display info on KCPE collection points
 def display_kcpe_collection_points(request):
@@ -268,7 +273,7 @@ def delete_KCPE_collection_point(request, pk):
 
 # ====================//// KEPSEA COLLECTION POINT VIEWS =================
 # display the KEPSEA collection points
-# @login_required(login_url='') 
+@login_required(login_url='') 
 def display_kepsea_collection_points(request):
     all_collection_points = Kepsea_collection_point.objects.all()
 
@@ -289,7 +294,7 @@ def display_kepsea_collection_points(request):
     return render(request, 'pages/kepsea/display_kepsea_collection_points.html', context=context)
 
 # display the KEPSEA collection form
-# @login_required(login_url='') 
+@login_required(login_url='') 
 def show_KEPSEA_collection_form(request):
     form = KEPSEA_collection_points_form
     
@@ -309,8 +314,144 @@ def show_KEPSEA_collection_form(request):
 
     return render(request, 'pages/kepsea/collection_form.html', context=context)
 
+# to update KEPSEA school collection
+@login_required(login_url='')     
+def update_KEPSEA_collection_point(request, pk):
+    if request.user.is_authenticated:
+        current_KEPSEA_collection_point = Kepsea_collection_point.objects.get(id=pk)
+        form = KEPSEA_collection_points_form(request.POST or None, instance=current_KEPSEA_collection_point)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Record Updated")
+            return redirect('display_kepsea_collection_points')
+        return render(request, 'pages/kepsea/collection_form.html', {'form': form})
+    else:
+        messages.success(request, "You must be logged in")
+        return redirect('')
+    
+
+# display KCPE collection point in details
+@login_required(login_url='')  
+def display_detailed_KEPSEA_collection_point(request, pk):
+    specific_collection_point = Kepsea_collection_point.objects.get(id=pk)
+
+    context = {
+       'specific_collection_point': specific_collection_point
+    }
+
+    return render(request, 'pages/kepsea/collection_point_details.html', context=context)
+
+
+# =======================================================
+from django.views.decorators.http import require_http_methods
+
+require_http_methods(['DELETE'])
+# deleting a collection point
+def delete_KEPSEA_collection_point(request, pk):
+    delete_collection_point = Kepsea_collection_point.objects.get(id=pk)
+    delete_collection_point.delete()
+
+    return redirect('display_kepsea_collection_points')
+
 
 # ==================== END OF KEPSEA COLLECTION POINT VIEWS ==============
+
+
+
+# ====================//// KCSE COLLECTION POINT VIEWS ==============
+# @login_required(login_url='')   
+# to display info on KCSE collection points
+def display_kcse_collection_points(request):
+    all_collection_points = Kcse_collection_point.objects.all()
+
+    collection_points_count = Kcse_collection_point.objects.all().count
+
+    # performing searches
+    if 'q' in request.GET:
+        q=request.GET['q']
+
+         # Filtering by collection point by name or school code
+        all_collection_points = Kcse_collection_point.objects.filter(Q(school_name__icontains=q) | Q(school_code__icontains=q))
+
+    context = {
+      'all_collection_points': all_collection_points,
+      'collection_points_count' : collection_points_count
+    }
+
+    return render(request, 'pages/kcse/display_kcse_collection_points.html', context=context)
+
+# display the KEPSEA collection form
+# @login_required(login_url='') 
+def show_KCSE_collection_form(request):
+    form = KCSE_collection_points_form
+    
+    if request.method == 'POST':
+        form = KCSE_collection_points_form(request.POST)
+
+        # checking validity of the form b4 saving
+        if form.is_valid():
+            form.save() 
+            messages.success(request, 'collection point added')
+
+            return redirect('display_kcse_collection_points')
+        
+    context = {
+        'form' : form
+    }
+
+    return render(request, 'pages/kcse/collection_form.html', context=context)
+
+
+
+@login_required(login_url='/login/')     
+def update_KCSE_collection_point(request, pk):
+    if request.user.is_authenticated:
+        try:
+            current_KCSE_collection_point = Kcse_collection_point.objects.get(id=pk)
+        except Kcse_collection_point.DoesNotExist:
+            messages.error(request, "Record not found")
+            return redirect('display_kcse_collection_points')
+
+        if request.method == 'POST':
+            form = KCSE_collection_points_form(request.POST, instance=current_KCSE_collection_point)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Record Updated")
+                return redirect('display_kcse_collection_points')
+        else:
+            form = KCSE_collection_points_form(instance=current_KCSE_collection_point)
+
+        return render(request, 'pages/kcse/collection_form.html', {'form': form})
+    else:
+        messages.error(request, "You must be logged in")
+        return redirect('login')
+
+
+# display KCPE collection point in details
+@login_required(login_url='')  
+def display_detailed_KCSE_collection_point(request, pk):
+    specific_collection_point = Kcse_collection_point.objects.get(id=pk)
+
+    context = {
+       'specific_collection_point': specific_collection_point
+    }
+
+    return render(request, 'pages/kcse/collection_point_details.html', context=context)
+
+
+# =======================================================
+from django.views.decorators.http import require_http_methods
+
+require_http_methods(['DELETE'])
+# deleting a collection point
+def delete_KCSE_collection_point(request, pk):
+    delete_collection_point = Kcse_collection_point.objects.get(id=pk)
+    delete_collection_point.delete()
+
+    return redirect('display_kcse_collection_points')
+
+
+# ====================END OF KCSE COLLECTION POINT VIEWS ==============
 
 
 
@@ -347,6 +488,27 @@ def search_kepsea(request):
     query = request.GET.get('query', '')
 
     schools = Kepsea_collection_point.objects.filter(
+        Q(school_code__icontains=query) |   # searches by school_code
+        Q(school_name__icontains=query)     # searches by school name
+    )
+
+    if schools.exists():
+        school = schools.first()
+        response = {
+            'school_name': school.school_name,
+            'entry': school.entry,
+            'collection_point': school.collection_point
+        }
+    else:
+        response = {'school_name': None, 'entry': None, 'collection_point': None}
+
+    return JsonResponse(response)
+
+# === for KCSE
+def search_kcse(request):
+    query = request.GET.get('query', '')
+
+    schools = Kcse_collection_point.objects.filter(
         Q(school_code__icontains=query) |   # searches by school_code
         Q(school_name__icontains=query)     # searches by school name
     )

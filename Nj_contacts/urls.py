@@ -35,9 +35,27 @@ urlpatterns = [
 
     path('show_KEPSEA_collection_form', views.show_KEPSEA_collection_form, name='show_KEPSEA_collection_form'),
 
+    path('update_KEPSEA_collection_point/<int:pk>', views.update_KEPSEA_collection_point, name='update_KEPSEA_collection_point'),
 
+    path('display_detailed_KEPSEA_collection_point/<int:pk>', views.display_detailed_KEPSEA_collection_point, name='display_detailed_KEPSEA_collection_point'),
+
+    path('delete_KEPSEA_collection_point/<int:pk>', views.delete_KEPSEA_collection_point, name='delete_KEPSEA_collection_point'),
 
     # ============end of KEPSEA views===============================================================
+
+
+    # ============///// KCSE views===============================================================
+    path('display_kcse_collection_points', views.display_kcse_collection_points, name='display_kcse_collection_points'),
+
+    path('show_KCSE_collection_form', views.show_KCSE_collection_form, name='show_KCSE_collection_form'),
+    
+    path('update_KCSE_collection_point/<int:pk>', views.update_KCSE_collection_point, name='update_KCSE_collection_point'),
+
+    path('display_detailed_KCSE_collection_point/<int:pk>', views.display_detailed_KCSE_collection_point, name='display_detailed_KCSE_collection_point'),
+    
+    path('delete_KCSE_collection_point/<int:pk>', views.delete_KCSE_collection_point, name='delete_KCSE_collection_point'),
+
+    # ============ end of KCSE views===============================================================
 
 
 
@@ -49,10 +67,13 @@ urlpatterns = [
     path('export_data_as_excel', views.export_data_as_excel, name='export_data_as_excel'),
     
 
-    # ========= htmx url search ========================================================================
+    # ========= htmx url search for collection points ========================================================================
     path('search/', views.search_school, name='search_school'),
 
     path('search_kepsea/', views.search_kepsea, name='search_kepsea'),
+
+    path('search_kcse/', views.search_kcse, name='search_kcse'),
+
 
     
     # path('accounts/signup/', views.privacy_policy, )
